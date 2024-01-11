@@ -1,0 +1,12 @@
+diff --git a/node_modules/html-express-js/src/index.js b/node_modules/html-express-js/src/index.js
+index 9d06c5c..cc7517d 100644
+--- a/node_modules/html-express-js/src/index.js
++++ b/node_modules/html-express-js/src/index.js
+@@ -15,6 +15,7 @@ const glob = promisify(g);
+  * @returns {Promise<string>} HTML
+  */
+ async function renderHtmlFileTemplate(path, data, state) {
++  if ( process.platform === "win32" && !path.startsWith('file:///') ) { path = 'file:///' + path; }
+   const { view } = await import(path);
+   const rendered = view(data, state);
+   let html = '';
