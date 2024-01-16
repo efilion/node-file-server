@@ -31,4 +31,4 @@ server.post('/upload/:filename', (req, res, next) => {
     res.sendStatus(200);
 });
 
-server.listen(3000);
+server.listen(process.env.PORT);
