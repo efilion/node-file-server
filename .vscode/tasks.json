@@ -28,8 +28,12 @@
 			"dockerRun": {
 				"env": {
 					"DEBUG": "*",
-					"NODE_ENV": "development"
-				}
+					"NODE_ENV": "development",
+				},
+				"ports": [
+					{ "containerPort": 3000, "hostPort": 3000, "protocol": "tcp" }
+				],
+				"customOptions": "--volume recordings:/var/lib/node-file-server/recordings"
 			},
 			"node": {
 				"enableDebugging": true

@@ -1,10 +1,7 @@
 import { html } from 'html-express-js';
-import path from 'path';
 import { readdirSync } from 'fs';
 
-const __dirname = path.resolve();
-
-export const view = ({directory}) => html`
+export const view = ({directory, path}) => html`
     <!DOCTYPE html>
     <html lang="en">
         <head>
@@ -16,8 +13,8 @@ export const view = ({directory}) => html`
             <main>
                 <h1>${directory}</h1>
                 <ul>
-                ${ readdirSync(path.join(__dirname, directory)).map(entry =>
-                    html`<li><a href="${directory}/${entry}">${entry}</a></li>`
+                ${ readdirSync(directory).map(entry =>
+                    html`<li><a href="${path}/${entry}">${entry}</a></li>`
                 )}
                 </ul>
             </main>

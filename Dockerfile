@@ -1,12 +1,15 @@
 FROM node:lts-alpine
 ENV NODE_ENV=production
+ENV PORT=3000
+ENV RECORDING_DIR=/var/lib/node-file-server/recordings
 WORKDIR /usr/src/app
 COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
 RUN npm install --dev --silent && mv node_modules ../
 COPY . .
-ARG port=3000
-ENV PORT=$port
-EXPOSE $port
+EXPOSE $PORT
 RUN chown -R node /usr/src/app
+VOLUME ${RECORDING_DIR}
+RUN mkdir -p ${RECORDING_DIR}
+RUN chown -R node ${RECORDING_DIR}
 USER node
 CMD ["node", "server.js"]

@@ -5,22 +5,23 @@ import { writeFile } from 'fs';
 
 const __dirname = path.resolve();
 const server = express();
+const recording_dir = path.resolve(process.env.RECORDING_DIR);
 
 server.engine('js', htmlExpress());
 server.set('view engine', 'js');
 server.set('views', path.join(__dirname, 'views'));
 
 server.get('/', (req, res, next) => {
-    res.render('index', { directory: 'recordings' });
+    res.render('index', { directory: recording_dir, path: 'recordings'});
 });
 
-server.use('/recordings', express.static(path.resolve(__dirname, 'recordings')));
+server.use('/recordings', express.static(recording_dir));
 
 server.use(express.raw({
     "type": ["audio/ogg"]
 }));
 server.post('/upload/:filename', (req, res, next) => {
-    writeFile(path.join(__dirname, 'recordings', req.params.filename), req.body, { "encoding": "base64"}, err => {
+    writeFile(path.join(recording_dir, req.params.filename), req.body, { "encoding": "base64"}, err => {
         if (err) {
             console.error(err);
         }
